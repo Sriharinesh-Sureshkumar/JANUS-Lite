@@ -1,0 +1,29 @@
+{
+  "name": "bugs",
+  "primary_key_column": "id",
+  "enable_rls": false,
+  "visibility": "POD",
+  "columns": [
+    { "name": "repo_url",      "type": "TEXT",    "required": false },
+    { "name": "source",        "type": "ENUM",    "required": true,
+      "options": ["github", "slack", "email"] },
+    { "name": "source_ref",    "type": "TEXT",    "required": false },
+    { "name": "hypothesis",    "type": "TEXT",    "required": false },
+    { "name": "priority",      "type": "ENUM",    "required": true,
+      "options": ["critical", "high", "medium", "low"] },
+    { "name": "status",        "type": "ENUM",    "required": true, "default": "new",
+      "options": ["new", "triaged", "reproducing", "rejected", "verified_and_fixed", "escalated"] },
+    { "name": "duplicate_of",  "type": "TEXT",    "required": false },
+    { "name": "repro_test",    "type": "TEXT",    "required": false },
+    { "name": "patch_diff",    "type": "TEXT",    "required": false },
+    { "name": "attempts",      "type": "INTEGER", "required": false, "default": 0 },
+    { "name": "evidence_log",  "type": "TEXT",    "required": false },
+    { "name": "pr_url",                    "type": "TEXT", "required": false },
+    { "name": "release_note",              "type": "TEXT", "required": false },
+    { "name": "confidence",               "type": "ENUM", "required": false,
+      "options": ["high", "medium", "low"] },
+    { "name": "confidence_reason",        "type": "TEXT", "required": false },
+    { "name": "static_analysis_findings", "type": "TEXT", "required": false }
+  ],
+  "config": {}
+}

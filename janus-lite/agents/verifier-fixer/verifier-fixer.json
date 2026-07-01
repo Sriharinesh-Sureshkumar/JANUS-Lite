@@ -1,0 +1,13 @@
+{
+  "name": "verifier-fixer",
+  "description": "Second-stage agent: clones the repo, writes a failing repro test, patches the bug, and runs the full suite — outputting a single JSON block for the pipeline to persist.",
+  "instruction": { "$file": "instruction.md" },
+  // toolsets: WORKSPACE_CLI gives git clone + shell execution for running tests
+  // POD gives read access to the bugs table for context lookups if needed
+  "toolsets": ["POD", "WORKSPACE_CLI"],
+  "visibility": "POD",
+  "permissions": { "grants": [
+    { "resource_type": "datastore_table", "resource_name": "bugs",
+      "permission_ids": ["datastore.table.read", "datastore.record.read"] }
+  ] }
+}

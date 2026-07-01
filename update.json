@@ -1,0 +1,1 @@
+﻿{"status":"verified_and_fixed","attempts":1,"patch_diff":"- if c[id] == case_id / + if c[case_id] == case_id","evidence_log":"Checked out janus-demo-target branch. Bug confirmed: update_case uses c[id] instead of c[case_id]. AST test failed. Applied one-line patch. Test passed."}
