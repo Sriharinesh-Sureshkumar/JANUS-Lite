@@ -1,4 +1,4 @@
-# janus-lite
+# JANUS-LITE
 
 Verification-first AI bug triage and auto-fix pipeline. Bug reports come in
 from GitHub, Slack, or email; nothing gets marked fixed unless a real test
