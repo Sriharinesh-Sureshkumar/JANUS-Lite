@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Live dashboard — JANUS-LITE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="sidebar-overlay" data-sidebar-overlay></div>
+<aside class="sidebar" data-sidebar>
+  <div class="sidebar-header">JANUS-LITE</div>
+  <div class="sidebar-label">Navigation</div>
+  <a class="sidebar-item active" href="dashboard.html"><span class="sidebar-dot"></span> Dashboard</a>
+  <a class="sidebar-item" href="pipeline.html">Pipeline</a>
+  <a class="sidebar-item" href="dashboard.html">Evidence</a>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-label">System</div>
+  <div class="sidebar-system-item">Pod: janus-lite</div>
+  <div class="sidebar-system-item">Model: Claude Sonnet</div>
+  <div class="sidebar-system-item">Agent access <small>ayush@gappy.ai</small></div>
+  <div class="sidebar-footer">v1.0 · Gappy AI Hackathon 2026</div>
+</aside>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="topnav-left">
+      <button class="menu-btn" data-menu-toggle aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="brand">JANUS-LITE</span>
+    </div>
+    <nav class="topnav-center">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="pipeline.html">Pipeline</a>
+      <a href="dashboard.html">Evidence</a>
+    </nav>
+    <div class="topnav-right">
+      <span class="pulse-dot"></span>
+      <span>Live — lemma.work</span>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="wrap">
+
+    <div class="page-title-row">
+      <div>
+        <h1 class="page-title">Live dashboard</h1>
+        <p class="page-subtitle">Real-time view of all bug reports, triage decisions, and verification outcomes</p>
+      </div>
+      <div class="page-meta">
+        <span class="refresh-dot"></span>
+        <span id="last-updated-text">Loading…</span>
+      </div>
+    </div>
+
+    <div id="state-banner" class="state-banner"></div>
+
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-label">Total bugs</div>
+        <div class="metric-value" id="metric-total" style="color:#E2E8F0">&mdash;</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Triaged</div>
+        <div class="metric-value" id="metric-triaged" style="color:#FBBF24">&mdash;</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Rejected</div>
+        <div class="metric-value" id="metric-rejected" style="color:#F87171">&mdash;</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Verified and fixed</div>
+        <div class="metric-value" id="metric-fixed" style="color:#4ADE80">&mdash;</div>
+      </div>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-step">Intake <span style="color:#818CF8">[<span id="flow-new">&mdash;</span>]</span></div>
+      <span class="flow-connector">→</span>
+      <div class="flow-step active">Triaged <span style="color:#FBBF24">[<span id="flow-triaged">&mdash;</span>]</span></div>
+      <span class="flow-connector">→</span>
+      <div class="flow-step">Verifying <span style="color:#38BDF8">[<span id="flow-reproducing">&mdash;</span>]</span></div>
+      <span class="flow-connector">→</span>
+      <div class="flow-step">Fixed <span style="color:#4ADE80">[<span id="flow-fixed">&mdash;</span>]</span></div>
+      <span class="flow-connector">→</span>
+      <div class="flow-step">Rejected <span style="color:#F87171">[<span id="flow-rejected">&mdash;</span>]</span></div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-groups">
+        <div class="filter-group">
+          <button class="filter-pill selected" data-filter-status="all">All</button>
+          <button class="filter-pill" data-filter-status="new">New</button>
+          <button class="filter-pill" data-filter-status="triaged">Triaged</button>
+          <button class="filter-pill" data-filter-status="reproducing">Reproducing</button>
+          <button class="filter-pill" data-filter-status="verified_and_fixed">Fixed</button>
+          <button class="filter-pill" data-filter-status="rejected">Rejected</button>
+          <button class="filter-pill" data-filter-status="escalated">Escalated</button>
+        </div>
+        <div class="filter-group">
+          <button class="filter-pill selected" data-filter-source="all">All</button>
+          <button class="filter-pill" data-filter-source="github">GitHub</button>
+          <button class="filter-pill" data-filter-source="slack">Slack</button>
+          <button class="filter-pill" data-filter-source="email">Email</button>
+        </div>
+      </div>
+      <input class="search-input" type="text" placeholder="Search hypothesis..." data-search />
+    </div>
+
+    <table class="bugs-table">
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Priority</th>
+          <th>Hypothesis</th>
+          <th>Status</th>
+          <th>Confidence</th>
+          <th>Static analysis</th>
+          <th>Attempts</th>
+          <th>PR</th>
+        </tr>
+      </thead>
+      <tbody id="bugs-tbody"></tbody>
+    </table>
+
+  </div>
+</main>
+
+<script src="js/app.js?v=3"></script>
+<script src="js/dashboard.js?v=3"></script>
+</body>
+</html>

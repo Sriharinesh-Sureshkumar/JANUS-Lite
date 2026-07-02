@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pipeline architecture — JANUS-LITE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="sidebar-overlay" data-sidebar-overlay></div>
+<aside class="sidebar" data-sidebar>
+  <div class="sidebar-header">JANUS-LITE</div>
+  <div class="sidebar-label">Navigation</div>
+  <a class="sidebar-item" href="dashboard.html">Dashboard</a>
+  <a class="sidebar-item active" href="pipeline.html"><span class="sidebar-dot"></span> Pipeline</a>
+  <a class="sidebar-item" href="dashboard.html">Evidence</a>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-label">System</div>
+  <div class="sidebar-system-item">Pod: janus-lite</div>
+  <div class="sidebar-system-item">Model: Claude Sonnet</div>
+  <div class="sidebar-system-item">Agent access <small>ayush@gappy.ai</small></div>
+  <div class="sidebar-footer">v1.0 · Gappy AI Hackathon 2026</div>
+</aside>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="topnav-left">
+      <button class="menu-btn" data-menu-toggle aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="brand">JANUS-LITE</span>
+    </div>
+    <nav class="topnav-center">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="pipeline.html" class="active">Pipeline</a>
+      <a href="dashboard.html">Evidence</a>
+    </nav>
+    <div class="topnav-right">
+      <span class="pulse-dot"></span>
+      <span>Live — lemma.work</span>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="wrap">
+
+    <div class="page-title-row">
+      <div>
+        <h1 class="page-title">Pipeline architecture</h1>
+        <p class="page-subtitle">Two specialized agents, one verification contract</p>
+      </div>
+    </div>
+
+    <div class="agent-cards">
+      <div class="agent-card">
+        <div class="agent-index">01</div>
+        <h2 class="agent-title">Triager</h2>
+        <span class="agent-role-tag">First-line agent</span>
+        <p class="agent-desc">Reads raw bug reports from any source. Checks the bugs table for duplicates before creating a new investigation. Writes a concrete hypothesis and assigns confidence — uncertain reports route to human review instead of proceeding automatically.</p>
+        <ul class="agent-list">
+          <li>Deduplicate across GitHub, Slack, email</li>
+          <li>Confidence scoring (high / medium / low)</li>
+          <li>Routes uncertain cases to needs_human_review</li>
+          <li>Outputs structured JSON only — never writes directly to table</li>
+        </ul>
+        <div class="agent-stat-row">
+          <span class="metric-pill">Claude Sonnet</span>
+          <span class="metric-pill">Pod workspace</span>
+          <span class="metric-pill">JSON output only</span>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-index">02</div>
+        <h2 class="agent-title">Verifier-Fixer</h2>
+        <span class="agent-role-tag">Second-line agent — sandboxed</span>
+        <p class="agent-desc">Clones the target repository into an isolated sandbox. Pre-searches the codebase using keyword extraction before writing any test. Runs ruff and bandit as a parallel static analysis layer. Never claims success on model confidence — only on a passing test.</p>
+        <ul class="agent-list">
+          <li>Keyword locator (ripgrep, 10-line context windows)</li>
+          <li>Static analysis: ruff + bandit on every run</li>
+          <li>Writes real failing reproduction tests</li>
+          <li>3-attempt retry loop with error feedback</li>
+          <li>Honest escalation — never fabricates a fix</li>
+          <li>Auto-opens GitHub PR on verified fix</li>
+        </ul>
+        <div class="agent-stat-row">
+          <span class="metric-pill">WORKSPACE_CLI</span>
+          <span class="metric-pill">ruff + bandit</span>
+          <span class="metric-pill">3-attempt retry</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contract-card">
+      <div class="contract-label">The contract</div>
+      <p class="contract-quote">"No fix ships without mechanical proof. If JANUS-Lite cannot produce a failing test that passes after the patch, it does not open a PR — it escalates honestly with the full evidence trail."</p>
+    </div>
+
+    <h2 class="section-title">Recent pipeline runs</h2>
+    <table class="bugs-table">
+      <thead>
+        <tr>
+          <th>Bug ID</th>
+          <th>Status</th>
+          <th>Attempts</th>
+          <th>Time taken</th>
+          <th>Outcome</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono-cell">d2095c19</td>
+          <td><span class="status-badge status-verified_and_fixed">verified_and_fixed</span></td>
+          <td class="mono-cell attempts-mid">1</td>
+          <td class="mono-cell">2m 14s</td>
+          <td>PR auto-opened</td>
+        </tr>
+        <tr>
+          <td class="mono-cell">a781be02</td>
+          <td><span class="status-badge status-verified_and_fixed">verified_and_fixed</span></td>
+          <td class="mono-cell attempts-mid">1</td>
+          <td class="mono-cell">1m 47s</td>
+          <td>PR auto-opened</td>
+        </tr>
+        <tr>
+          <td class="mono-cell">f930ac41</td>
+          <td><span class="status-badge status-rejected">rejected</span></td>
+          <td class="mono-cell attempts-0">0</td>
+          <td class="mono-cell">0m 38s</td>
+          <td>Escalated — shared dependency risk</td>
+        </tr>
+        <tr>
+          <td class="mono-cell">c114e0d9</td>
+          <td><span class="status-badge status-rejected">rejected</span></td>
+          <td class="mono-cell attempts-0">0</td>
+          <td class="mono-cell">0m 41s</td>
+          <td>Escalated — upstream dependency</td>
+        </tr>
+        <tr>
+          <td class="mono-cell">7be2f156</td>
+          <td><span class="status-badge status-triaged">triaged</span></td>
+          <td class="mono-cell attempts-0">0</td>
+          <td class="mono-cell">&mdash;</td>
+          <td>Queued for verifier-fixer</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</main>
+
+<script src="js/app.js"></script>
+</body>
+</html>

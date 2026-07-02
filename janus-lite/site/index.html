@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JANUS-LITE — No fix ships without proof.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="sidebar-overlay" data-sidebar-overlay></div>
+<aside class="sidebar" data-sidebar>
+  <div class="sidebar-header">JANUS-LITE</div>
+  <div class="sidebar-label">Navigation</div>
+  <a class="sidebar-item" href="dashboard.html">Dashboard</a>
+  <a class="sidebar-item" href="pipeline.html">Pipeline</a>
+  <a class="sidebar-item" href="dashboard.html">Evidence</a>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-label">System</div>
+  <div class="sidebar-system-item">Pod: janus-lite</div>
+  <div class="sidebar-system-item">Model: Claude Sonnet</div>
+  <div class="sidebar-system-item">Agent access <small>ayush@gappy.ai</small></div>
+  <div class="sidebar-footer">v1.0 · Gappy AI Hackathon 2026</div>
+</aside>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="topnav-left">
+      <button class="menu-btn" data-menu-toggle aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="brand">JANUS-LITE</span>
+    </div>
+    <nav class="topnav-center">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="pipeline.html">Pipeline</a>
+      <a href="dashboard.html">Evidence</a>
+    </nav>
+    <div class="topnav-right">
+      <span class="pulse-dot"></span>
+      <span>Live — lemma.work</span>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <span class="eyebrow-pill">Janus-lite · verification-first · 2026</span>
+      <h1 class="hero-heading">No fix ships<br />without proof.</h1>
+      <p class="hero-sub">JANUS-Lite ingests bug reports from GitHub, Slack, and email — reproduces each bug with a failing test in a sandboxed environment, and only ships a fix when a test suite confirms it works. Never on model confidence alone.</p>
+      <div class="hero-tags">
+        <span class="tag">Verification-first</span>
+        <span class="tag">Static analysis</span>
+        <span class="tag">Honest escalation</span>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="dashboard.html">View dashboard</a>
+        <a class="btn btn-secondary" href="https://github.com/Sriharinesh-Sureshkumar/sahayak-janus-demo" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="term-window">
+        <div class="term-chrome">
+          <span class="term-dot red"></span>
+          <span class="term-dot yellow"></span>
+          <span class="term-dot green"></span>
+          <span class="term-title">process_verification.py</span>
+        </div>
+        <div class="term-body"><span class="term-comment"># JANUS-LITE · verifier-fixer</span>
+<span class="term-key">bug_id:</span> <span class="term-val">"d2095c19-f97c-4f34"</span>
+<span class="term-key">hypothesis:</span> <span class="term-val">"save_case missing case_id validation"</span>
+<span class="term-key">repo:</span> <span class="term-val">"sahayak-janus-demo"</span>
+
+<span class="term-arrow">→</span> cloning repository...
+<span class="term-arrow">→</span> extracting keywords: ['save_case', 'case_id']
+<span class="term-arrow">→</span> keyword found: tools_data.py line 51
+<span class="term-arrow">→</span> writing repro test...
+<span class="term-arrow">→</span> running test... <span class="term-fail">FAILED</span> (expected)
+<span class="term-arrow">→</span> bug confirmed. writing patch...
+<span class="term-arrow">→</span> running test... <span class="term-pass">PASSED</span>
+<span class="term-arrow">→</span> status: <span class="term-pass">verified_and_fixed</span>
+<span class="term-arrow">→</span> PR opened: <a class="term-link" href="https://github.com/Sriharinesh-Sureshkumar/sahayak-janus-demo/pull/1" target="_blank" rel="noopener">github.com/...pull/1</a></div>
+      </div>
+      <div class="term-metrics">
+        <span class="metric-pill">2 bugs fixed</span>
+        <span class="metric-pill">ruff + bandit</span>
+        <span class="metric-pill">1 attempt</span>
+        <span class="metric-pill">PR auto-opened</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pipeline-section">
+  <div class="wrap">
+    <div class="pipeline-card">
+      <div class="pipeline-card-top">
+        <div class="left"><span class="sidebar-dot"></span> Janus-lite · bug pipeline</div>
+        <div class="right">// verification contract</div>
+      </div>
+
+      <div class="pipeline-boxes">
+        <div class="pipeline-box">
+          <span class="pipeline-box-badge">01</span>
+          <h3 class="pipeline-box-title">Bug report</h3>
+          <ul>
+            <li>· GitHub issues</li>
+            <li>· Slack messages</li>
+            <li>· Email intake</li>
+          </ul>
+          <span class="pipeline-arrow">→</span>
+        </div>
+        <div class="pipeline-box active">
+          <span class="pipeline-box-badge">02</span>
+          <h3 class="pipeline-box-title">Triager</h3>
+          <ul>
+            <li>· Dedupe check</li>
+            <li>· Hypothesis</li>
+            <li>· Confidence scoring</li>
+          </ul>
+          <span class="pipeline-arrow">→</span>
+        </div>
+        <div class="pipeline-box">
+          <span class="pipeline-box-badge">03</span>
+          <h3 class="pipeline-box-title">Verifier-Fixer</h3>
+          <ul>
+            <li>· Clone + static scan</li>
+            <li>· Failing test written</li>
+            <li>· Patch + verify</li>
+          </ul>
+          <span class="pipeline-arrow">→</span>
+        </div>
+        <div class="pipeline-box">
+          <span class="pipeline-box-badge">04</span>
+          <h3 class="pipeline-box-title">PR or escalate</h3>
+          <ul>
+            <li>· Human approval</li>
+            <li>· PR auto-opened</li>
+            <li>· Evidence trail</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pipeline-stats">
+        <span class="metric-pill">1 attempt avg</span>
+        <span class="metric-pill">ruff + bandit integrated</span>
+        <span class="metric-pill">honest escalation on failure</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="js/app.js"></script>
+</body>
+</html>
